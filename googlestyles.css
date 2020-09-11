@@ -1,0 +1,62 @@
+img{
+    position: absolute;
+    top: 15%;
+    left:30%;
+    width: 500px;
+}
+form{
+    position: absolute;
+    top: 50%;
+    left:35%;
+}
+#searchbar{
+    position: relative;
+    right: 10%;
+    width: 500px;
+    height: 45px;
+    border-radius: 20px;
+}
+#Sbutton{
+    position: relative;
+    margin-top:10px;
+    left:  5%;
+    height: 30px;
+}
+#Fbutton,#Sbutton{
+    height: 35px;
+    width: 170px;
+    font-size: 16px;
+    color: gray;
+    border-radius: 5px;
+    background-color: lavender;
+    border:none;
+}
+#Sbutton:hover{
+    border:1px solid black;
+    background-color: white;
+}
+#Fbutton:hover{
+    border:1px solid black;
+    background-color: white;
+}
+#Fbutton{
+    position: relative;
+    margin-top:10px;
+    left:15%;
+}
+aside{
+    float:right;
+    padding:10px;
+    margin:10px;
+} 
+#advanced{
+    width:200px;
+}
+#advf{
+    position: absolute;
+    top: 35%;
+    left:25%;
+}
+label{
+    width: 200px;
+}

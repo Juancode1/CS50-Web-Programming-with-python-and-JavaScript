@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Advance Search</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="stylesheet" href="googlestyles.css">
+    </head>
+    <body>
+        <aside>
+            <a href="index.html">Google search</a>
+            <br>
+            <a href="indeximg.html">Google Image search</a>
+        </aside>
+        <img id="advanced" src="https://sueldospublicos.eleconomista.es/multimedia/images/Google.png">
+        <form id="advf" action="https://www.google.com/search?">
+            <label for="allw">All these Words :</label>
+            <input id="allw" type="text" name="as_q">
+            <br><br>
+            <label for="tew">This Exact Word or Phrase :</label>
+            <input id="tew" type="text" name="as_epq">
+            <br><br>
+            <label for="atw">Any of these Words :</label>
+            <input id="atw" type="text" name="as_oq">
+            <br><br>
+            <label for="ntw">None of these Words :</label>
+            <input id="ntw" type="text" name="as_eq">
+            <br><br>
+            <input class="btn btn-primary" type="submit" value="Advanced Search">
+        </form>
+    </body>
+</html>
