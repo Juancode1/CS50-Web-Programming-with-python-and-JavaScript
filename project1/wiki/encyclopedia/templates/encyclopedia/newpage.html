@@ -1,0 +1,20 @@
+{% extends "encyclopedia/layout.html" %}
+{% block title %} New Entry {% endblock %}
+
+{% block body %}
+    {% if message %}
+    <div>
+        {{ message }}
+    </div>
+    {% endif %}
+    <form action="{% url 'newpage' %}" method="POST">
+        {% csrf_token %}
+        <h2> New Entry </h2> 
+        {{ Eform.titulo.label_tag }} 
+        {{ Eform.titulo }}
+        <br><br>
+        {{ Eform.contenido.label_tag }}
+        {{ Eform.contenido }}
+        <input type="submit" name="action" value="Save Entry">
+    </form>
+{% endblock %}
