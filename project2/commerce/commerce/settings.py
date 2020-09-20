@@ -54,6 +54,8 @@ ROOT_URLCONF = 'commerce.urls'
 
 MEDIA_ROOT="/Documents/Django Proyects/commerce/media/"
 
+LOGIN_URL='login'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
