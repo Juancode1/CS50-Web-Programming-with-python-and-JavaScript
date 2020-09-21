@@ -27,16 +27,16 @@ class Listform(forms.Form):
 class Listform(ModelForm):
     class Meta:
         model = listing
-        fields = ['title', 'description', 'currentprice','user','photo','category']
+        fields = ['user','title', 'description','currentprice','photo','category']
 
 def index(request):
     if request.method=="POST":
         Lform=Listform(request.POST,request.FILES)
         if Lform.is_valid():
             user=settings.AUTH_USER_MODEL
-            #item=listing(user=user,Lform)
-            #item.save()
             Lform.save()
+            #item=listing(user=user)
+            #item.save()
             return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/index.html",{
