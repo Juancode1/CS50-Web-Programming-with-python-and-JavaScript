@@ -4,7 +4,7 @@
     <h2>Active Listings</h2>
     <div>
         {% for item in items %}
-            <img src="media/{{ item.photo }}" alt="Product Image">
+            <img src="{{ item.photo.url }}" alt="Product Image" width="400px" >
             <h4>{{ item.title }}</h4>
             <ul>
                 <li>Initial Price : ${{ item.currentprice }}</li>

@@ -27,16 +27,17 @@ class Listform(forms.Form):
 class Listform(ModelForm):
     class Meta:
         model = listing
-        fields = ['user','title', 'description','currentprice','photo','category']
+        exclude=['user']
 
 def index(request):
     if request.method=="POST":
-        Lform=Listform(request.POST,request.FILES)
+        #item=listing(user=request.user)# way2
+        #Lform=Listform(request.POST,request.FILES,instance=item)# way2
+        Lform=Listform(request.POST,request.FILES)# way1
         if Lform.is_valid():
-            user=settings.AUTH_USER_MODEL
-            Lform.save()
-            #item=listing(user=user)
-            #item.save()
+            item=Lform.save(commit=False)# way1
+            item.user = request.user# way1
+            item.save()
             return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/index.html",{
