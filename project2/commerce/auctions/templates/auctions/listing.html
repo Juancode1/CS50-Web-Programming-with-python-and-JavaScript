@@ -4,6 +4,9 @@
     <h2>Post your item to Sell </h2>
     <form enctype="multipart/form-data" action="{% url 'index' %}" method="POST">
         {% csrf_token %}
-        {{ Lform }}
+        <table>
+            {{ Lform }}
+        </table>
+        <input class="btn btn-primary" type="submit">
     </form>
 {% endblock %}

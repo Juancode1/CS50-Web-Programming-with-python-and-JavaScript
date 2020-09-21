@@ -52,7 +52,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'commerce.urls'
 
-MEDIA_ROOT="/Documents/Django Proyects/commerce/media/"
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_URL='login'
 

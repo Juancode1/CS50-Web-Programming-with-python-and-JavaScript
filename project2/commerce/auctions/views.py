@@ -4,9 +4,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import User
+from .models import User,listing
 from django import forms
+from django.forms import ModelForm
+from django.conf import settings
 
+"""
 class Listform(forms.Form):
     Cats=[
         ('Fa','Fashion'),
@@ -15,15 +18,30 @@ class Listform(forms.Form):
         ('Ho','Home'),
         ('Cl','clothes'),
     ]
-    title=forms.CharField(max_length=64)
+    title=forms.CharField(max_length=64,label="Item Name")
     description=forms.Textarea()
-    currentprice=forms.IntegerField()
-    photo=forms.ImageField(upload_to='biduploads/%Y/%m/%d/',blank=True)
-    category=forms.ChoiceField(choices=Cats)
-    #models.CharField(choices=Cats,max_length=64)
+    currentprice=forms.IntegerField(label="Price" )
+    photo=forms.ImageField(required=True,label="Picture")
+    category=forms.ChoiceField(choices=Cats,label="Category")"""
+
+class Listform(ModelForm):
+    class Meta:
+        model = listing
+        fields = ['title', 'description', 'currentprice','user','photo','category']
 
 def index(request):
-    return render(request, "auctions/index.html")
+    if request.method=="POST":
+        Lform=Listform(request.POST,request.FILES)
+        if Lform.is_valid():
+            user=settings.AUTH_USER_MODEL
+            #item=listing(user=user,Lform)
+            #item.save()
+            Lform.save()
+            return HttpResponseRedirect(reverse("index"))
+    else:
+        return render(request, "auctions/index.html",{
+            "items":listing.objects.all()
+        })
 
 def login_view(request):
     if request.method == "POST":
@@ -76,7 +94,7 @@ def register(request):
 
 #@login_required(login_url='login')
 @login_required
-def listing(request):
+def setitem(request):
     return render(request,"auctions/listing.html",{
         "Lform":Listform()
     })

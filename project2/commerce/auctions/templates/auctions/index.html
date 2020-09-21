@@ -2,6 +2,20 @@
 
 {% block body %}
     <h2>Active Listings</h2>
-
-    TODO
+    <div>
+        {% for item in items %}
+            <img src="media/{{ item.photo }}">
+            <h4>{{ item.title }}</h4>
+            <ul>
+                <li>Initial Price : ${{ item.currentprice }}</li>
+                <li>Item Category: {{ item.category }}</li>
+            </ul>
+        <h5>Item description:</h5>
+        <p>{{ item.description }}</p> 
+        {% empty %}
+        <ul>
+            <li><h4>No items for sale so far</h4></li>
+        </ul>
+        {% endfor %}
+    </div>
 {% endblock %}
