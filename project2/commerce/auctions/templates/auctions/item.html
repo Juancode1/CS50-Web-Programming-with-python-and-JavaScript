@@ -1,0 +1,33 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h1>Listing : {{ item.title }} </h1>
+    <figure>
+        <img src="{{ item.photo.url }}" alt="Product Image" width="500px" >
+        <figcaption>{{ item.title }} </figcaption>
+    </figure>
+    <form class="itemdesc" action="{% url 'itempage' item.id %}" method="POST">
+        <h2> ${{ item.currentprice }} </h2>
+        {% if user != item.user %}
+            <p>{{ bids|length }} bid(s) so far. your bid is the current bid:  </p>
+            {{ Bform }}
+            {% if maxbid != None %}
+                <p>highest bid so far: ${{ maxbid }} made by: {{ maxbid.user }} </p>
+            {% endif %}
+            <input type="submit" value="Place Bid">
+        {% else %}
+            <p>{{ bids|length }} bid(s) so far. </p>
+            {% if maxbid != None %}
+                <p>highest bid so far: ${{ maxbid }} made by: {{ maxbid.user }} </p>
+            {% endif %}
+            <input type="button" value="Close Auction">
+        {% endif %}
+        <h4><strong> Details: </strong></h4>
+        <ul>
+            <li>placed by: {{ item.user }} </li>
+            <li>item Category: {{ item.category }} </li>
+        </ul>
+        <h5>Item Description: </h5>
+        <p> {{ item.description }} </p>
+    </form>
+{% endblock %}

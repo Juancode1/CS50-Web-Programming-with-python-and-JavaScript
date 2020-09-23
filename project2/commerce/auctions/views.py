@@ -4,30 +4,20 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import User,listing
+from .models import User,listing,bids
 from django import forms
 from django.forms import ModelForm
 from django.conf import settings
-
-"""
-class Listform(forms.Form):
-    Cats=[
-        ('Fa','Fashion'),
-        ('To','Toys'),
-        ('El','Electronics'),
-        ('Ho','Home'),
-        ('Cl','clothes'),
-    ]
-    title=forms.CharField(max_length=64,label="Item Name")
-    description=forms.Textarea()
-    currentprice=forms.IntegerField(label="Price" )
-    photo=forms.ImageField(required=True,label="Picture")
-    category=forms.ChoiceField(choices=Cats,label="Category")"""
 
 class Listform(ModelForm):
     class Meta:
         model = listing
         exclude=['user']
+
+class Bidform(ModelForm):
+    class Meta:
+        model = bids
+        fields=['bid']
 
 def index(request):
     if request.method=="POST":
@@ -98,4 +88,20 @@ def register(request):
 def setitem(request):
     return render(request,"auctions/listing.html",{
         "Lform":Listform()
+    })
+
+def itempage(request,id):
+    item=listing.objects.get(id=id)
+    bidlist=bids.objects.filter(product=id)
+    if bidlist:
+        maxbid=bids.objects.get(bid=max(bidlist))
+    else:
+        maxbid=None
+    user=request.user
+    return render(request,"auctions/item.html",{
+        "item":item,
+        "Bform":Bidform(),
+        "bids":bidlist,
+        "maxbid":maxbid,
+        "user":user,
     })

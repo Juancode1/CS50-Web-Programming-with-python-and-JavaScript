@@ -25,7 +25,7 @@ class listing(models.Model):
 
 class bids(models.Model):
     user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="bider")
-    product=models.ForeignKey(listing,on_delete=models.CASCADE,related_name="bid")
+    product=models.ForeignKey(listing,on_delete=models.CASCADE,related_name="product")
     bid=models.IntegerField()
 
 class comments(models.Model):

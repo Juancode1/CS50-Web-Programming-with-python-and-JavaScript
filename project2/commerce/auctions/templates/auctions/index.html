@@ -2,20 +2,24 @@
 
 {% block body %}
     <h2>Active Listings</h2>
-    <div>
-        {% for item in items %}
-            <img src="{{ item.photo.url }}" alt="Product Image" width="400px" >
-            <h4>{{ item.title }}</h4>
-            <ul>
-                <li>Initial Price : ${{ item.currentprice }}</li>
-                <li>Item Category: {{ item.category }}</li>
-            </ul>
-        <h5>Item description:</h5>
-        <p>{{ item.description }}</p> 
-        {% empty %}
-        <ul>
-            <li><h4>No items for sale so far</h4></li>
-        </ul>
-        {% endfor %}
-    </div>
+    {% for item in items %}
+    <a href="{% url 'itempage' item.id %}">
+        <div class="item">
+            <div class="itemimg">
+                <img src="{{ item.photo.url }}" alt="Product Image" width="500px" >
+            </div>
+            <div class="iteminfo">
+                <h3>{{ item.title }}</h3>
+                <ul>
+                    <li>Initial Price : ${{ item.currentprice }}</li>
+                    <li>Item Category: {{ item.category }}</li>
+                </ul>
+            </div>
+        </div>
+    </a>
+    {% empty %}
+    <ul>
+        <li><h4>No items for sale so far</h4></li>
+    </ul>
+    {% endfor %}
 {% endblock %}

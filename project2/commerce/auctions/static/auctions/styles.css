@@ -1,3 +1,28 @@
 body {
     padding: 10px;
+    background-color:ghostwhite;
+}
+.item{
+    position: relative;
+    width: 90%;
+    height:350px;
+    padding: 15px;
+    background-color: gainsboro;
+    border: 1px solid gray;
+    margin: 5%;
+}
+.item:hover{
+    color: rgb(39, 18, 131);
+    background-color: lightslategray ;
+    border: 2px solid gray;
+}
+.itemimg{
+    position: absolute;
+    top: 15%;
+    left: 50px;
+}
+.iteminfo{
+    position: absolute;
+    left: 50%;
+    top:25%;
 }
