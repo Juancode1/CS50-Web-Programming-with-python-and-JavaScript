@@ -8,6 +8,7 @@ from .models import User,listing,bids
 from django import forms
 from django.forms import ModelForm
 from django.conf import settings
+from django.db.models import Avg, Max, Min, Sum
 
 class Listform(ModelForm):
     class Meta:
@@ -91,17 +92,30 @@ def setitem(request):
     })
 
 def itempage(request,id):
-    item=listing.objects.get(id=id)
-    bidlist=bids.objects.filter(product=id)
-    if bidlist:
-        maxbid=bids.objects.get(bid=max(bidlist))
+    if request.method == "POST":
+        if request.POST["action"]=="Place Bid":
+            Bform=Bidform(request.POST)
+            if Bform.is_valid():
+                bid=Bform.save(commit=False)
+                bid.user = request.user
+                bid.product=listing.objects.get(id=id)
+                bid.save()
+                return HttpResponseRedirect(reverse('itempage',args=(id,)))
+        elif request.POST["action"]=="Close Auction":
+            pass
     else:
-        maxbid=None
-    user=request.user
-    return render(request,"auctions/item.html",{
-        "item":item,
-        "Bform":Bidform(),
-        "bids":bidlist,
-        "maxbid":maxbid,
-        "user":user,
-    })
+        item=listing.objects.get(id=id)
+        bidlist=bids.objects.filter(product=id)
+        if bidlist:
+            aux=bids.objects.all().aggregate(Max('bid'))['bid__max']
+            maxbid=bids.objects.get(bid=aux)
+        else:
+            maxbid=None
+        user=request.user
+        return render(request,"auctions/item.html",{
+            "item":item,
+            "Bform":Bidform(),
+            "bids":bidlist,
+            "maxbid":maxbid,
+            "user":user,
+        })
