@@ -24,6 +24,7 @@ class listing(models.Model):
     user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="seller")
     category=models.CharField(choices=Cats,default=('Other','Other'),max_length=64,verbose_name="Category ")
     publishdate=models.DateField(auto_now_add=True) 
+    terminated=models.BooleanField(auto_created=False)
     def __str__(self):
         return  f"{self.title}"
 
@@ -36,3 +37,11 @@ class comments(models.Model):
     user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="commenter")
     product=models.ForeignKey(listing,on_delete=models.CASCADE,related_name="comment")
     comment=models.TextField()
+
+class sold(models.Model):
+    product=models.OneToOneField(listing,on_delete=models.CASCADE)
+    seller=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="fseller")
+    buyer=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="fbuyer")
+    price=models.IntegerField()
+    solddate=models.DateTimeField(auto_now_add=True)
+    

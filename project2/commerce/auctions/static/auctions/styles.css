@@ -26,3 +26,32 @@ body {
     left: 50%;
     top:25%;
 }
+.errorM{
+    color: red;
+}
+.notificationM{
+    color: green;
+}
+.Menu{
+    position: sticky;
+    top: 0;
+    background-color: ghostwhite;
+    z-index: +1;
+}
+.logo{
+    width: 20%;
+}
+.navi{
+    width: 50%;
+}
+.signed{
+    width: 30%;
+}
+.nav-item{
+    margin: 5px;
+}
+.btn .badge {
+    padding: 5px 5px;
+    background-color: blue;
+    color: white;
+  }

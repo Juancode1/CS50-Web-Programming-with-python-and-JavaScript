@@ -1,27 +1,42 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+    {% if item.terminated %}
+        <h3 class="notificationM"> {{Amessage}} </h3>
+    {% endif %}
     <h1>Listing : {{ item.title }} </h1>
     <figure>
         <img src="{{ item.photo.url }}" alt="Product Image" width="500px" >
         <figcaption>{{ item.title }} </figcaption>
     </figure>
-    <form class="itemdesc" action="{% url 'itempage' item.id %}" method="POST">
-        {% csrf_token %}
-        <h2> ${{ item.currentprice }} </h2>
         {% if user != item.user %}
-            <p>{{ bids|length }} bid(s) so far. your bid is the current bid:  </p>
-            {{ Bform }}
-            {% if maxbid != None %}
-                <p>highest bid so far: ${{ maxbid.bid }} made by: {{ maxbid.user }} </p>
-            {% endif %}
-            <input type="submit" value="Place Bid" name="action">
+            <form class="itemdesc" action="{% url 'itempage' item.id %}" method="POST">
+                {% csrf_token %}
+                <h2> ${{ item.currentprice }} </h2>
+                <p>{{ bids|length }} bid(s) so far. your bid is the current bid:  </p>
+                {{ Bform }} 
+                {% if Emessage %}
+                    <p class="errorM"><strong>{{Emessage}}</strong></p>
+                {% endif %}
+                {% if maxbid != None %}
+                    <p>highest bid so far: ${{ maxbid.bid }} made by: {{ maxbid.user }} </p>
+                {% endif %}
+                {% if not item.terminated %}
+                    <input type="submit" value="Place Bid" name="action">
+                {% endif %}
+            </form>
         {% else %}
-            <p>{{ bids|length }} bid(s) so far. </p>
-            {% if maxbid != None %}
-                <p>highest bid so far: ${{ maxbid.bid }} made by: {{ maxbid.user }} </p>
-            {% endif %}
-            <input type="button" value="Close Auction" name="action">
+            <form class="itemdesc" action="{% url 'itempage' item.id %}" method="POST">
+                {% csrf_token %}
+                <h2> ${{ item.currentprice }} </h2>
+                <p>{{ bids|length }} bid(s) so far. </p>
+                {% if maxbid != None %}
+                    <p>highest bid so far: ${{ maxbid.bid }} made by: {{ maxbid.user }} </p>
+                {% endif %}
+                {% if not item.terminated %}
+                    <input type="submit" value="Close Auction" name="action">
+                {% endif %}
+            </form>
         {% endif %}
         <h4><strong> Details: </strong></h4>
         <ul>
@@ -30,5 +45,4 @@
         </ul>
         <h5>Item Description: </h5>
         <p> {{ item.description }} </p>
-    </form>
 {% endblock %}

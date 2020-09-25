@@ -1,23 +1,31 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+    {% if Nmessage %}
+        {% for message in Nmessage %}
+            <h3 class="notificationM"> {{message}} </h3>
+        {% endfor %}
+    {% endif %}
     <h2>Active Listings</h2>
     {% for item in items %}
-    <a href="{% url 'itempage' item.id %}">
-        <div class="item">
-            <div class="itemimg">
-                <img src="{{ item.photo.url }}" alt="Product Image" width="500px" >
+        {% if not item.terminated %}
+        <a href="{% url 'itempage' item.id %}">
+            <div class="item">
+                <div class="itemimg">
+                    <img src="{{ item.photo.url }}" alt="Product Image" width="500px" >
+                </div>
+                <div class="iteminfo">
+                    <h3>{{ item.title }}</h3>
+                    <ul>
+                        <li>Initial Price : ${{ item.currentprice }}</li>
+                        <li>Item Category: {{ item.category }}</li>
+                    </ul>
+                    <p>Publish date: {{ item.publishdate }} </p>
+                    <p>Item published by: {{item.user}} </p>
+                </div>
             </div>
-            <div class="iteminfo">
-                <h3>{{ item.title }}</h3>
-                <ul>
-                    <li>Initial Price : ${{ item.currentprice }}</li>
-                    <li>Item Category: {{ item.category }}</li>
-                </ul>
-                <p>Publish date: {{ item.publishdate }} </p>
-            </div>
-        </div>
-    </a>
+        </a>
+        {% endif %}
     {% empty %}
     <ul>
         <li><h4>No items for sale so far</h4></li>
