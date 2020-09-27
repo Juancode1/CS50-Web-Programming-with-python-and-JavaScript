@@ -25,6 +25,14 @@
                     <input type="submit" value="Place Bid" name="action">
                 {% endif %}
             </form>
+            <form class="watchlistButt" action="{% url 'itempage' item.id %}" method="POST">
+                {% csrf_token %}
+                {% if not watchFlag %}
+                    <input type="submit" value="Add to Watchlist" name="action">
+                {% else %}
+                    <input type="submit" value="Remove from Watchlist" name="action">
+                {% endif %}
+            </form>
         {% else %}
             <form class="itemdesc" action="{% url 'itempage' item.id %}" method="POST">
                 {% csrf_token %}
@@ -35,6 +43,14 @@
                 {% endif %}
                 {% if not item.terminated %}
                     <input type="submit" value="Close Auction" name="action">
+                {% endif %}
+            </form>
+            <form class="watchlistButt" action="{% url 'itempage' item.id %}" method="POST">
+                {% csrf_token %}
+                {% if not watchFlag  %}
+                    <input type="submit" value="Add to Watchlist" name="action">
+                {% else %}
+                    <input type="submit" value="Remove from Watchlist" name="action">
                 {% endif %}
             </form>
         {% endif %}

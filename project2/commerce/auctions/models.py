@@ -23,8 +23,8 @@ class listing(models.Model):
     photo=models.ImageField(upload_to='biduploads/%Y/%m/%d/',blank=False,verbose_name="Picture of item ")
     user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="seller")
     category=models.CharField(choices=Cats,default=('Other','Other'),max_length=64,verbose_name="Category ")
-    publishdate=models.DateField(auto_now_add=True) 
-    terminated=models.BooleanField(auto_created=False)
+    publishdate=models.DateTimeField(auto_now_add=True) 
+    terminated=models.BooleanField(default=False)
     def __str__(self):
         return  f"{self.title}"
 
@@ -44,4 +44,8 @@ class sold(models.Model):
     buyer=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="fbuyer")
     price=models.IntegerField()
     solddate=models.DateTimeField(auto_now_add=True)
-    
+
+class watchlistM(models.Model):
+    watcher=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="wwatch")
+    product=models.ForeignKey(listing,on_delete=models.CASCADE,related_name="watched")
+    watchdate=models.DateTimeField(auto_now_add=True)

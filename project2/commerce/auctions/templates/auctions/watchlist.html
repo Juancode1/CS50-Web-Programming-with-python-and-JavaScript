@@ -1,0 +1,64 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    {% if Nmessage %}
+        {% for message in Nmessage %}
+            <h3 class="notificationM"> {{message}} </h3>
+        {% endfor %}
+    {% endif %}
+    <h2>Active Listings</h2>
+    <div class="Wcontainer">
+        {% for item in Wlist %}
+            {% if not item.product.terminated %}
+            <a href="{% url 'itempage' item.product.id %}">
+                <div class="item-sm">
+                    <div class="itemimg-sm">
+                        <img src="{{ item.product.photo.url }}" alt="Product Image" width="200px" >
+                    </div>
+                    <div class="iteminfo-sm">
+                        <h3>{{ item.product.title }}</h3>
+                        <ul>
+                            <li>Initial Price : ${{ item.product.currentprice }}</li>
+                            <li>Item Category: {{ item.product.category }}</li>
+                        </ul>
+                        <p>Publish date: {{ item.product.publishdate }} </p>
+                        <p>Item published by: {{item.product.user}} </p>
+                    </div>
+                </div>
+            </a>
+            {% endif %}
+        {% empty %}
+        <ul>
+            <li><h4>No items for sale so far</h4></li>
+        </ul>
+        {% endfor %}
+    </div>
+    <h2>Closed Auctions: </h2>
+    <div class="Wcontainer">
+        {% for item in Wlist %}
+            {% if item.product.terminated %}
+            <a href="{% url 'itempage' item.product.id %}">
+                <div class="item-sm">
+                    <div class="itemimg-sm">
+                        <img src="{{ item.product.photo.url }}" alt="Product Image" width="200px" >
+                    </div>
+                    <div class="iteminfo-sm">
+                        <h3>{{ item.product.title }}</h3>
+                        <ul>
+                            <li>Initial Price : ${{ item.product.currentprice }}</li>
+                            <li>Item Category: {{ item.product.category }}</li>
+                        </ul>
+                        <p>Publish date: {{ item.product.publishdate }} </p>
+                        <p>Item published by: {{item.product.user}} </p>
+                    </div>
+                </div>
+            </a>
+            {% endif %}
+        {% empty %}
+        <ul>
+            <li><h4>No items for sale so far</h4></li>
+        </ul>
+        {% endfor %}
+    </div>
+
+{% endblock %}
